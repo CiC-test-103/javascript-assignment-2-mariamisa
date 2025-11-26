@@ -7,6 +7,11 @@ class Bank {
 
     // Add methods here:
     // Example: createAccount(name, initialDeposit)
+    createAccount(name, initialDeposit) {
+        const newAccount = new Account(name, initialDeposit)
+        this.accounts.push(newAccount)
+        return newAccount
+    }
 
 }
 
@@ -20,17 +25,37 @@ class Account {
 
     // Add methods here:
     // Example: deposit(amount) 
+    deposit(amount) {
+        this.balance += amount
+        this.transactionHistory.push({ transactionType: 'Deposit', amount })
+    }
     // example data to be stored in transactionHistory { transactionType: 'Deposit', amount: 500 }
 
     // Example: withdraw(amount)
+    withdraw(amount) {
+        this.balance -= amount
+        this.transactionHistory.push({ transactionType: 'Withdrawal', amount })
+    }
     // example data to be stored in transactionHistory { transactionType: 'Withdrawal', amount: 200 }
 
     // Example: transfer(amount, recipientAccount)
+    transfer(amount, recipientAccount) {
+        if (this.balance >= amount) {
+            this.balance -= amount
+            this.transactionHistory.push({ transactionType: 'Transfer', amount, to: recipientAccount.name })
+
+            recipientAccount.balance += amount
+            recipientAccount.transactionHistory.push({ transactionType: 'Received', amount, from: this.name })
+        }
+    }
     // example data to be stored in transactionHistory:
     // for account sending { transactionType: 'Transfer', amount: 300, to: recipientName }
     // for account recieving { transactionType: 'Received', amount: 300, from: senderName }
-    
+
     // Example: checkBalance()
+    checkBalance() {
+        return this.balance
+    }
 }
 
 //<-------------------------------DO NOT WRITE BELOW THIS LINE------------------------------>
