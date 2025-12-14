@@ -33,8 +33,12 @@ class Account {
 
     // Example: withdraw(amount)
     withdraw(amount) {
-        this.balance -= amount
-        this.transactionHistory.push({ transactionType: 'Withdrawal', amount })
+        if (this.balance >= amount) {
+            this.balance -= amount
+            this.transactionHistory.push({ transactionType: 'Withdrawal', amount })
+        } else {
+            console.log(`Your balance: ${this.balance} doesn't enough to withdraw amount: ${amount} `) 
+        }
     }
     // example data to be stored in transactionHistory { transactionType: 'Withdrawal', amount: 200 }
 
@@ -46,6 +50,8 @@ class Account {
 
             recipientAccount.balance += amount
             recipientAccount.transactionHistory.push({ transactionType: 'Received', amount, from: this.name })
+        } else {
+            console.log(`Your balance: ${this.balance} doesn't enough to transfer amount: ${amount} `) 
         }
     }
     // example data to be stored in transactionHistory:
